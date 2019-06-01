@@ -14,7 +14,8 @@ export const toggleCheck = createAction(TOGGLE_CHEKC);
 const initialState = {
   modal: {
     state: false,
-    message: ''
+    message: '',
+    type: 'info'
   }
 };
 
@@ -22,14 +23,10 @@ export default handleActions(
   {
     [SHOW_MODAL]: (state, action) =>
       produce(state, draft => {
-        const { message } = action.payload;
+        const { message, type } = action.payload;
         draft.modal.state = true;
         draft.modal.message = message;
-
-        if (action.payload.confirm) {
-          const { confirm } = action.payload;
-          draft.modal.confirm = confirm;
-        }
+        draft.modal.type = type || 'info';
       }),
     [CLOSE_MODAL]: (state, action) =>
       produce(state, draft => {

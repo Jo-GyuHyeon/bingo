@@ -4,10 +4,13 @@ import { bindActionCreators } from 'redux';
 import * as baseActions from '../store/modules/base';
 import * as gameActions from '../store/modules/game';
 import * as playersActions from '../store/modules/players';
+import AlertModal from '../components/Common/Modal/Alert';
+import WarningModal from '../components/Common/Modal/warning';
+import ModalPortal from '../components/Common/Modal/ModalPortal';
 import PlayerList from '../components/Player/PlayerList';
 
 const BingoContainer = ({
-  base,
+  modal,
   game,
   players,
   BaseActions,
@@ -29,7 +32,10 @@ const BingoContainer = ({
     const cell_id = parseInt(e.target.id);
 
     if (game.turn !== player_id) {
-      alert('It is wrong turn.');
+      BaseActions.showModal({
+        type: 'warning',
+        message: 'It is wrong turn.'
+      });
       return;
     }
     _checkBingo(player_id, cell_id);
@@ -56,20 +62,24 @@ const BingoContainer = ({
       player => player.completed.length >= BINGO_COUNT
     );
     if (winner.length > 0) {
-      alert(`${winner[0].id + 1}P completed the bingo`);
-      GameActions.initializeForm();
-      PlayerActions.initializeForm();
+      BaseActions.showModal({
+        message: `${winner[0].id + 1}P completed the bingo`
+      });
     }
     if (winner.length > 1) {
-      alert("It's a draw.");
-      GameActions.initializeForm();
-      PlayerActions.initializeForm();
+      BaseActions.showModal({ message: "It's a draw." });
     }
   };
 
   const _nextTurn = () => {
     const next_turn = (game.turn + 1) % players.length;
     GameActions.setNextTurn(next_turn);
+  };
+
+  const handleCloseModal = () => {
+    BaseActions.closeModal();
+    GameActions.initializeForm();
+    PlayerActions.initializeForm();
   };
 
   return (
@@ -82,13 +92,25 @@ const BingoContainer = ({
       <button onClick={handleOnplayClick}>
         {!game.start ? 'start' : 'restart'}
       </button>
+      {modal.state && (
+        <ModalPortal>
+          {modal.type === 'info' ? (
+            <AlertModal onClose={handleCloseModal} message={modal.message} />
+          ) : (
+            <WarningModal
+              onClose={BaseActions.closeModal}
+              message={modal.message}
+            />
+          )}
+        </ModalPortal>
+      )}
     </div>
   );
 };
 
 export default connect(
   state => ({
-    base: state.base,
+    modal: state.base.modal,
     game: state.game,
     players: state.players.players
   }),
