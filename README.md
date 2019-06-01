@@ -51,7 +51,7 @@ Develop environment
 2. Install local dependencies
 
    ```
-npm install
+    npm install
    ```
    
 
