@@ -1,7 +1,13 @@
 import React from 'react';
+import BingoContainer from '../comtainers/BingoContainer';
+import PageTemplate from './PageTemplate/PageTemplate';
 
 function App() {
-  return <div>hello world!</div>;
+  return (
+    <PageTemplate>
+      <BingoContainer />
+    </PageTemplate>
+  );
 }
 
 export default App;
