@@ -8,6 +8,7 @@ import AlertModal from '../components/Common/Modal/Alert';
 import WarningModal from '../components/Common/Modal/warning';
 import ModalPortal from '../components/Common/Modal/ModalPortal';
 import PlayerList from '../components/Player/PlayerList';
+import Button from '../components/Common/Button/Button';
 
 const BingoContainer = ({
   modal,
@@ -21,6 +22,7 @@ const BingoContainer = ({
 
   const handleOnplayClick = _ => {
     GameActions.playGame();
+    GameActions.setNextTurn(0);
     PlayerActions.shuffleTable();
   };
 
@@ -34,7 +36,7 @@ const BingoContainer = ({
     if (game.turn !== player_id) {
       BaseActions.showModal({
         type: 'warning',
-        message: 'It is wrong turn.'
+        message: 'It is not your turn.'
       });
       return;
     }
@@ -89,9 +91,10 @@ const BingoContainer = ({
         started={game.start}
         onClick={handleOnCellClick}
       />
-      <button onClick={handleOnplayClick}>
+      <Button onClick={handleOnplayClick}>
         {!game.start ? 'start' : 'restart'}
-      </button>
+      </Button>
+
       {modal.state && (
         <ModalPortal>
           {modal.type === 'info' ? (

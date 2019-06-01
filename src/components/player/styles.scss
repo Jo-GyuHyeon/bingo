@@ -1,12 +1,14 @@
 .list {
-  border: solid 1px black;
   display: flex;
   justify-content: space-around;
+  padding: 2.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
 .player {
   &-title {
-    border: solid 1px black;
+    padding: 1rem 0;
   }
   &-table {
     display: grid;
@@ -15,15 +17,17 @@
     div {
       width: 50px;
       height: 50px;
-      border: solid 1px black;
-      display: inline-block;
+      border: solid 1.5px black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       color: black;
-      text-align: center;
-      line-height: 42px;
     }
   }
 
   &-completed {
-    border: solid 1px black;
+    padding: 1.75rem 0;
+    font-size: 1.2rem;
+    font-weight: 400;
   }
 }

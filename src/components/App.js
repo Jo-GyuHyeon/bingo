@@ -1,11 +1,12 @@
 import React from 'react';
 import BingoContainer from '../comtainers/BingoContainer';
+import PageTemplate from './PageTemplate/PageTemplate';
 
 function App() {
   return (
-    <div>
+    <PageTemplate>
       <BingoContainer />
-    </div>
+    </PageTemplate>
   );
 }
 

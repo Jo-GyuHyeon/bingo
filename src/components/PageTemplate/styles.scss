@@ -1,0 +1,17 @@
+$layout-width: 768px;
+
+.page {
+  max-width: $layout-width;
+  margin: 3rem auto;
+  font-family: "Roboto", sans-serif;
+  background-color: white;
+  border-radius: 3rem;
+  padding: 3rem;
+  &__header {
+    &-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #1abc9c;
+    }
+  }
+}
