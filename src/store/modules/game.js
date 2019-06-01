@@ -7,6 +7,7 @@ const SET_TURN = 'game/SET_TURN';
 
 export const initializeForm = createAction(INITIALIZE_FORM);
 export const playGame = createAction(PLAY_GAME);
+export const setNextTurn = createAction(SET_TURN);
 
 const initialState = {
   start: false,
@@ -17,12 +18,12 @@ export default handleActions(
   {
     [PLAY_GAME]: (state, action) =>
       produce(state, draft => {
-        const turn = action.payload;
-        draft.turn = turn;
+        draft.start = true;
       }),
     [SET_TURN]: (state, action) =>
       produce(state, draft => {
-        draft.start = true;
+        const turn = action.payload;
+        draft.turn = turn;
       }),
     [INITIALIZE_FORM]: state =>
       produce(state, draft => {

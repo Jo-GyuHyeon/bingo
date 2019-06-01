@@ -6,35 +6,50 @@ const SHUFFLE_TABLE = 'palyers/SHUFFLE_TABLE';
 const ADD_COMPLETED = 'palyers/ADD_COMPLETED';
 const INITIALIZE_FORM = 'palyers/INITIALIZE_FORM';
 
-export const showModal = createAction(SHUFFLE_TABLE);
+export const shuffleTable = createAction(SHUFFLE_TABLE);
 export const addCompleted = createAction(ADD_COMPLETED);
 export const initializeForm = createAction(INITIALIZE_FORM);
 
-let default_table = Array.from(Array(TABLE_SIZE), () => Array());
+const table = {
+  bingo_table: Array.from(Array(TABLE_SIZE), () => Array(0)),
+  numbers: Array.from(Array(TABLE_SIZE * TABLE_SIZE).keys()),
+  init() {
+    return this.setTable(this.numbers);
+  },
+  setTable(numbers) {
+    this.bingo_table = Array.from(Array(TABLE_SIZE), () => Array(0));
+    for (let i = 0; i < numbers.length; i++) {
+      this.bingo_table[Math.floor(i / TABLE_SIZE)].push({
+        value: numbers[i] + 1,
+        checked: false
+      });
+    }
+    return this.bingo_table;
+  },
+  shuffle() {
+    const shuffled_numbers = this.numbers
+      .map(a => [Math.random(), a])
+      .sort((a, b) => a[0] - b[0])
+      .map(a => a[1]);
 
-for (let i = 0; i < TABLE_SIZE * TABLE_SIZE; i++) {
-  default_table[Math.floor(i / 5)].push(i + 1);
-}
+    return this.setTable(shuffled_numbers);
+  }
+};
 
 const _player = {
-  table: default_table,
+  table: table.init(),
   completed: []
 };
 
-const initialState = [{ ..._player }, { ..._player }];
+const initialState = { players: [{ ..._player }, { ..._player }] };
 
 export default handleActions(
   {
     [SHUFFLE_TABLE]: (state, action) =>
       produce(state, draft => {
-        const { message } = action.payload;
-        draft.modal.state = true;
-        draft.modal.message = message;
-
-        if (action.payload.confirm) {
-          const { confirm } = action.payload;
-          draft.modal.confirm = confirm;
-        }
+        draft.players = draft.players.map(_ => {
+          return { completed: [], table: table.shuffle() };
+        });
       }),
     [ADD_COMPLETED]: (state, action) =>
       produce(state, draft => {

@@ -1,0 +1,29 @@
+.list {
+  border: solid 1px black;
+  display: flex;
+  justify-content: space-around;
+}
+
+.player {
+  &-title {
+    border: solid 1px black;
+  }
+  &-table {
+    display: grid;
+    grid-template-columns: repeat(5, 50px);
+    grid-gap: 5px;
+    div {
+      width: 50px;
+      height: 50px;
+      border: solid 1px black;
+      display: inline-block;
+      color: black;
+      text-align: center;
+      line-height: 42px;
+    }
+  }
+
+  &-completed {
+    border: solid 1px black;
+  }
+}
