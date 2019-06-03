@@ -7,7 +7,7 @@ import * as playersActions from '../store/modules/players';
 import AlertModal from '../components/Common/Modal/Alert';
 import WarningModal from '../components/Common/Modal/warning';
 import ModalPortal from '../components/Common/Modal/ModalPortal';
-import PlayerList from '../components/Player/PlayerList';
+import PlayerList from '../components/player/PlayerList';
 import Button from '../components/Common/Button/Button';
 
 const BingoContainer = ({
